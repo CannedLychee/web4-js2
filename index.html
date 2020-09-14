@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript</title>
+</head>
+<body onload="load()">        
+	<p id="greeting"></p>
+    <input id="dec-number" type="number" placeholder="输入一个十进制非负整数">
+    <input id="bin-bit" type="number" placeholder="输入转化后二进制数字位数">
+    <button id="trans-btn">转化为二进制</button>
+	<p id="result">运算结果</p>
+	
+	<button id="circle">3循环小游戏</button>
+	<p id="r43game"></p>
+	<button id="ninexnine">九九乘法表</button>
+	<p id="ninexninetable"></p>
+	<script>
+
+	let greeting = document.getElementById('greeting')
+
+	let load = function(){
+		let time = new Date()
+		let h = time.getHours()
+		if (5<=h && h<12)
+			greeting.innerHTML = 'Good Morning'
+		else if (12==h)
+			greeting.innerHTML = 'It\'s High Noon'
+		else if (12<h && h<17)
+			greeting.innerHTML = 'Good Afternoon'
+		else if (17<=h && h<21)
+			greeting.innerHTML = 'Good Evening'
+		else 
+			greeting.innerHTML = 'Night =)'
+
+	}
+
+	let dec2bin = function (decNumber) {
+		if (decNumber<0){
+			console.log('输入负数')
+			return ''
+		}
+		else if (decNumber != Math.floor(decNumber)){
+			console.log('输入不是整数')
+			return ''
+		}
+		else {
+			let r = ""
+			while( decNumber>0 ){
+				let dectmp = Math.floor(decNumber/2)
+				r += decNumber-dectmp*2
+				decNumber = dectmp
+				console.log(r)
+			}
+			return r
+		}
+	}
+	let btn = document.getElementById('trans-btn')
+	let result = document.getElementById('result')
+	let num = document.getElementById('dec-number')
+	let bit = document.getElementById('bin-bit')
+
+	btn.onclick = function() {
+		let r = dec2bin(num.value)
+		if (r.length > bit.value){
+			result.innerHTML = r
+			console.log('位数不足')
+		}
+		else{
+			let ro = ''
+			for (let i=0;i<(bit.value-r.length);i++){
+				ro += '0'
+				console.log(ro)
+			}
+			ro += r.toString()
+			result.innerHTML = ro
+		}
+	}
+
+	function contain3(num){
+		if (num/3 == Math.floor(num/3))
+			return true
+		else if(num.toString().indexOf('3') != -1)
+			return true
+		return false
+	}
+	let circle = document.getElementById('circle')
+	let r43game = document.getElementById('r43game')
+	circle.onclick = function(){
+		for (let i=1;i<=100;i++){
+			if (contain3(i))
+				r43game.innerHTML += 'PA,'
+			else
+				r43game.innerHTML += (i.toString()+',')
+		}
+	}
+
+	let nxn = document.getElementById('ninexnine')
+	let nxn_t = document.getElementById('ninexninetable')
+
+	nxn.onclick = function() {
+		for (let ir=1;ir<=9;ir++){
+			for (let ic=1;ic<=9;ic++){
+				if (ir*ic>9)
+					nxn_t.innerHTML += `${ir}*${ic}=${ir*ic} `
+				else
+					nxn_t.innerHTML += `${ir}*${ic}=0${ir*ic} `
+			}
+			nxn_t.innerHTML += '<br/>'
+		}
+	}
+
+    </script>
+</body>
+</html>
